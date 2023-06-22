@@ -1,30 +1,65 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
+<script >
+import axios from 'axios';
+
+export default{
+    data() {
+      return {
+        //array vuoto da pienare con la chiamata axios
+        tasks: [],
+
+        //struttura oggetto per creare nuove stask
+        newTask: {
+          title: '',
+          status: false,
+        }
+      }
+    },
+
+    methods: {
+      
+    },
+
+    //Chiamata axios 
+    mounted() {
+    
+    axios.get('http://localhost:8888/Boolean/php-todo-list-json/backend/index.php')
+         .then(response => {
+            console.log(this.students = response.data);
+         });
+  }
+  }
+
+  
+  
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+<div class="container">
+  <div class="row">
+    <div class="col text-center my-5">
+      <h1>
+        Todo List
+      </h1>
+    </div>
   </div>
-  <HelloWorld msg="Vite + Vue" />
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <ul class="list-group list-group-flush mb-5">
+        <li class="list-group-item">An item</li>
+        <li class="list-group-item">A second item</li>
+        <li class="list-group-item">A third item</li>
+        <li class="list-group-item">A fourth item</li>
+        <li class="list-group-item">And a fifth one</li>
+      </ul>
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2" name="diane">
+        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+      </div>
+    </div>
+  </div>
+</div>
+  
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
 </style>
