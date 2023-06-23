@@ -17,7 +17,6 @@ export default{
 
     methods: {
       insertTask(){
-
         const url = 'http://localhost:8888/Boolean/php-todo-list-json/backend/newTasks.php';
         const data = this.newTask;
         const headers = {
@@ -31,6 +30,25 @@ export default{
         })
           .catch(error => console.error("error", error));
       }
+      },
+
+      deleteTask(index){
+        // console.log("task deleted", index);
+        const url = 'http://localhost:8888/Boolean/php-todo-list-json/backend/deleteTasks.php';
+        const data = {"index": index};
+        const headers = {
+        headers: { 'Content-Type': 'multipart/form-data' } 
+      };
+
+      axios.post(url, data, headers)
+          .then(response => {this.tasks = response.data;
+          // this.newTask.title = ""
+        })
+          .catch(error => console.error("error", error));
+      },
+
+      taskToggle(index){
+      this.tasks[index].status = !this.tasks[index].status;
       }
     },
 
@@ -43,6 +61,7 @@ export default{
          });
   }
   }
+
 
   
   
@@ -60,7 +79,10 @@ export default{
   <div class="row">
     <div class="col-md-6 offset-md-3">
       <ul class="list-group list-group-flush mb-5">
-        <li v-for="(task, index) in tasks" class="list-group-item">{{task.title}}</li>
+        <li v-for="(task, index) in tasks" :key="index" class="list-group-item d-flex justify-content-between">
+          <span @click="taskToggle(index)" :class="task.status ? '' : 'text-decoration-line-through'">{{task.title}}</span>
+          <i @click="deleteTask(index)" class="bi bi-x-square-fill"></i>
+        </li>
       </ul>
       <form @submit.prevent="insertTask" action="">
         <div class="input-group">
